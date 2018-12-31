@@ -1,2 +1,2 @@
 # Rentify.
-Electronics renting API built in Node JS
+Electronics renting API built in Node & Express
