@@ -5,7 +5,7 @@ let mongoose = require("mongoose");
 
 //creating the schema for the categories:
 let categoriesShema = mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, trim: true },
   dateOfCreation: { type: Date, default: Date.now },
   isPublished: Boolean
 });
