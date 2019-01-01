@@ -43,12 +43,32 @@ router.post("/categories", (req, res) => {
 
 //editting a category
 router.put("/categories/:id", (req, res) => {
-  res.send("This is the put/edit category route");
+  Category.findById({ _id: req.params.id })
+    .then(dataToUpdate => {
+      if (!dataToUpdate) {
+        res.send("Could not find a category with the given ID");
+      } else {
+        dataToUpdate.name = req.body.name;
+        dataToUpdate.isPublished = req.body.isPublished;
+
+        dataToUpdate.save();
+        res.status(200).send(dataToUpdate);
+      }
+    })
+    .catch(err => {
+      res.send(err);
+    });
 });
 
 //deleting a category
 router.delete("/categories/:id", (req, res) => {
-  res.send("this is the delete category route");
+  Category.deleteOne({ _id: req.params.id })
+    .then(deleted => {
+      res.status(200).send(deleted);
+    })
+    .catch(err => {
+      res.status(400).send(err.message);
+    });
 });
 
 module.exports = router;
