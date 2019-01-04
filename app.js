@@ -2,6 +2,8 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let app = express();
 
+
+
 //importing routes
 let indexRoutes = require("./routes/index");
 let gadgetRoutes = require("./routes/electronics");
