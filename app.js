@@ -1,7 +1,10 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let app = express();
+
+//importing routes
 let indexRoutes = require("./routes/index");
+let gadgetRoutes = require("./routes/electronics");
 let categoriesRoutes = require("./routes/categories");
 let mongoose = require("mongoose");
 let cors = require("cors");
@@ -16,9 +19,6 @@ mongoose
     console.log("Oops could not connect to mongo db! ", err.message);
   });
 
-
-
-
 //middlewares
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
@@ -30,6 +30,7 @@ app.use("/", indexRoutes);
 
 //Getting the categories routes
 app.use("/api/electronics", categoriesRoutes);
+app.use("/api/electronics", gadgetRoutes);
 
 //Start server
 let port = process.env.PORT || 3000;

@@ -23,6 +23,17 @@ router.get("/categories", (req, res) => {
     });
 });
 
+//getting a single electonic device
+router.get("/categories/:id", (req, res) => {
+  Category.findById({ _id: req.params.id })
+    .then(data => {
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      res.status(400).send(err.message);
+    });
+});
+
 //creating a new category
 router.post("/categories", (req, res) => {
   //creating a new category
