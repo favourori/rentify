@@ -11,7 +11,7 @@ let cors = require("cors");
 app.use(cors());
 
 mongoose
-  .connect("mongodb://localhost/Rentify")
+  .connect("mongodb://favourtheo:1A2b3c--@ds149404.mlab.com:49404/rentify")
   .then(() => {
     console.log("Connected to Mongo Db");
   })
