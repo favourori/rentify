@@ -3,7 +3,8 @@ let router = express.Router();
 let mongoose = require("mongoose");
 let _ = require("lodash");
 let bcrypt = require("bcrypt");
-
+let jwt = require("jsonwebtoken");
+let config = require("config");
 //importing the Users Schema
 let User = require("../models/users");
 
@@ -22,9 +23,15 @@ router.post("/", async (req, res) => {
   user
     .save()
     .then(newUser => {
+      //setting the token
+      let token = jwt.sign({ id: user._id }, config.get("jwtPrivateKey"));
+
       //selecting what to send back in the response
       let response = _.pick(newUser, ["_id", "name", "email"]);
-      res.status(200).send(response);
+      res
+        .header("x-auth-token", token)
+        .status(200)
+        .send(response);
     })
     .catch(err => {
       res.status(400).send(err.message);

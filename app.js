@@ -12,10 +12,10 @@ let auth = require("./routes/auth");
 let mongoose = require("mongoose");
 let cors = require("cors");
 
-if (!config.get("jwtPrivateKey")) {
-  console.log("JWT Private key not defined!");
-  process.exit(1);
-}
+// if (!config.get("jwtPrivateKey")) {
+//   console.log("JWT Private key not defined!");
+//   process.exit(1);
+// }
 
 app.use(cors());
 
