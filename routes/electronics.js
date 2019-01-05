@@ -19,7 +19,8 @@ let electronicSchema = mongoose.Schema({
   serialNumber: String,
   productionYear: String,
   category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-  numberInStock: Number
+  numberInStock: Number,
+  image: String,
 });
 
 //Electronics Scheme ends here..
@@ -58,7 +59,8 @@ router.post("/", (req, res) => {
     serialNumber: req.body.serialNumber,
     productionYear: req.body.productionYear,
     category: req.body.category,
-    numberInStock: req.body.numberInStock
+    numberInStock: req.body.numberInStock,
+    image: req.body.image
   });
 
   electronic
