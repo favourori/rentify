@@ -8,6 +8,7 @@ let app = express();
 let indexRoutes = require("./routes/index");
 let gadgetRoutes = require("./routes/electronics");
 let categoriesRoutes = require("./routes/categories");
+let usersRoutes = require('./routes/users')
 let mongoose = require("mongoose");
 let cors = require("cors");
 app.use(cors());
@@ -33,6 +34,7 @@ app.use("/", indexRoutes);
 //Getting the categories routes
 app.use("/api/electronics", categoriesRoutes);
 app.use("/api/electronics", gadgetRoutes);
+app.use('/api/users', usersRoutes);
 
 //Start server
 let port = process.env.PORT || 3000;
