@@ -1,44 +1,30 @@
 let express = require("express");
 let router = express.Router();
 let mongoose = require("mongoose");
+let _ = require("lodash");
+let bcrypt = require("bcrypt");
 
-//creating the schema to create users
-
-let userSchema = mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
-});
-
-let User = mongoose.model("user", userSchema);
-
-//The routes:
-
-//Getting all users
-
-router.get("/", (req, res) => {
-  User.find()
-    .then(users => {
-      res.status(200).send(users);
-    })
-    .catch(err => {
-      res.status(400).send(err.message);
-    });
-});
+//importing the Users Schema
+let User = require("../models/users");
 
 //Creating a new user
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   let user = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password
   });
 
+  let salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+
   user
     .save()
     .then(newUser => {
-      res.status(200).send(newUser);
+      //selecting what to send back in the response
+      let response = _.pick(newUser, ["_id", "name", "email"]);
+      res.status(200).send(response);
     })
     .catch(err => {
       res.status(400).send(err.message);

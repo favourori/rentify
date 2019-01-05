@@ -1,16 +1,22 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let app = express();
-
-
-
+let config = require("config");
 //importing routes
 let indexRoutes = require("./routes/index");
 let gadgetRoutes = require("./routes/electronics");
 let categoriesRoutes = require("./routes/categories");
-let usersRoutes = require('./routes/users')
+let usersRoutes = require("./routes/users");
+let auth = require("./routes/auth");
+
 let mongoose = require("mongoose");
 let cors = require("cors");
+
+if (!config.get("jwtPrivateKey")) {
+  console.log("JWT Private key not defined!");
+  process.exit(1);
+}
+
 app.use(cors());
 
 mongoose
@@ -34,7 +40,8 @@ app.use("/", indexRoutes);
 //Getting the categories routes
 app.use("/api/electronics", categoriesRoutes);
 app.use("/api/electronics", gadgetRoutes);
-app.use('/api/users', usersRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/auth", auth);
 
 //Start server
 let port = process.env.PORT || 3000;
